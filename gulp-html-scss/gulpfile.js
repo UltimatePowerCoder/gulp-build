@@ -4,16 +4,18 @@ const gulp = require('gulp');
 // Подключаем пакет gulp file include:
 const fileInclude = require('gulp-file-include');
 
+const fileIncludeSetting = {
+    prefix: '@@',
+    basepath: '@file',
+}
+
 // Пишем task обрабатывающий html файлы:
 gulp.task('includeFiles', function(){
     // Функция возвращает поток, поэтому gulp src создает поток.
     // Далее через "пайпы" мы работаем с файлами и сохраняем их куда нам нужно. 
     // Мы будем обрабатывать файлы из папки src за исключением папки blocks.
     return gulp.src('./src/*.html')
-        .pipe(fileInclude({
-            prefix: '@@',
-            basepath: '@file'
-        }))
+        .pipe(fileInclude(fileIncludeSetting))
         .pipe(gulp.dest('./dist/'))
 });
 
