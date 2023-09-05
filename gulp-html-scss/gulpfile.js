@@ -32,6 +32,12 @@ gulp.task('sass', function(){
         .pipe(gulp.dest('./dist/css/'))
 })
 
+// Таск для копирования изображений из src в dist
+gulp.task('copyImages', function(){
+    return gulp.src('./src/img/**/*')
+        .pipe(gulp.dest('./dist/img/'))
+})
+
 // gulp.task('hello', function(done){
 //     console.log('Hello from GULP!');
 //     done()
