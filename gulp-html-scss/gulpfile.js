@@ -16,6 +16,9 @@ const sass = require('gulp-sass')(require('sass'));
 // Переменная для локального сервера:
 const server = require('gulp-server-livereload');
 
+// Удаление папки dist:
+const clean = require('gulp-clean');
+const fs = require('fs');
 
 // Пишем task обрабатывающий html файлы:
 gulp.task('includeFiles', function() {
@@ -52,6 +55,14 @@ const serverOptions = {
 gulp.task('startServer', function() {
     return gulp.src('./dist/').pipe(server(serverOptions))
 });
+
+// Таск удаляющий папку dist:
+gulp.task('clean', function(done){
+    if (fs.existsSync('./dist/')) {
+        return gulp.src('./dist/', { read: false }).pipe(clean({ force: true }));
+    }
+    done();
+})
 
 // gulp.task('hello', function(done){
 //     console.log('Hello from GULP!');
