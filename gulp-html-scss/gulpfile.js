@@ -21,7 +21,7 @@ const clean = require('gulp-clean');
 const fs = require('fs');
 
 // Пишем task обрабатывающий html файлы:
-gulp.task('includeFiles', function() {
+gulp.task('html', function() {
     // Функция возвращает поток, поэтому gulp src создает поток.
     // Далее через "пайпы" мы работаем с файлами и сохраняем их куда нам нужно. 
     // Мы будем обрабатывать файлы из папки src за исключением папки blocks.
@@ -39,7 +39,7 @@ gulp.task('sass', function() {
 });
 
 // Таск для копирования изображений из src в dist
-gulp.task('copyImages', function() {
+gulp.task('images', function() {
     return gulp.src('./src/img/**/*')
         .pipe(gulp.dest('./dist/img/'))
 });
@@ -52,7 +52,7 @@ const serverOptions = {
 // На Ubuntu возникает ошибка если раскомментировать livereload.
 
 // Таск для локального сервера:
-gulp.task('startServer', function() {
+gulp.task('server', function() {
     return gulp.src('./dist/').pipe(server(serverOptions))
 });
 
