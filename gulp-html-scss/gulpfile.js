@@ -64,6 +64,14 @@ gulp.task('clean', function(done){
     done();
 })
 
+// Таск слежения за файлами:
+gulp.task('watch', function(){
+    gulp.watch('./src/scss/**/*.scss', gulp.parallel('sass'));
+    gulp.watch('./src/**/*.html', gulp.parallel('html'));
+    gulp.watch('./img/**/*', gulp.parallel('images'));
+
+})
+
 // gulp.task('hello', function(done){
 //     console.log('Hello from GULP!');
 //     done()
