@@ -72,6 +72,12 @@ gulp.task('watch', function(){
 
 })
 
+gulp.task('default', gulp.series(
+    'clean',
+     gulp.parallel('html', 'sass', 'images'),
+     gulp.parallel('server', 'watch'),
+))
+
 // gulp.task('hello', function(done){
 //     console.log('Hello from GULP!');
 //     done()
