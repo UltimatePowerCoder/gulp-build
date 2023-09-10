@@ -16,9 +16,15 @@ const sass = require('gulp-sass')(require('sass'));
 // Переменная для локального сервера:
 const server = require('gulp-server-livereload');
 
+// Переменная для gulp-sourcemaps:
+const sourceMaps = require('gulp-sourcemaps');
+
 // Удаление папки dist:
 const clean = require('gulp-clean');
 const fs = require('fs');
+
+// Переменная для группировки медиа запросов:
+const groupMedia = require('gulp-group-css-media-queries');
 
 // Пишем task обрабатывающий html файлы:
 gulp.task('html', function() {
@@ -32,9 +38,14 @@ gulp.task('html', function() {
 
 // Таск для компиляции scss -> css
 gulp.task('sass', function() {
-    return gulp.src('./src/scss/*.scss')
+    return gulp
+        .src('./src/scss/*.scss')
+        .pipe(sourceMaps.init())
         .pipe(sass())
+        // Подключение группировки медиа запросов:
+        .pipe(groupMedia())
         //Сохраняем скомпилированные файлы в папку css.
+        .pipe(sourceMaps.write())
         .pipe(gulp.dest('./dist/css/'))
 });
 
@@ -72,11 +83,15 @@ gulp.task('watch', function(){
 
 })
 
+// Дефолтный таск, запускающий сборку:
 gulp.task('default', gulp.series(
     'clean',
      gulp.parallel('html', 'sass', 'images'),
      gulp.parallel('server', 'watch'),
 ))
+
+// Исходные карты для css:
+
 
 // gulp.task('hello', function(done){
 //     console.log('Hello from GULP!');
