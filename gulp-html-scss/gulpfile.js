@@ -83,6 +83,12 @@ gulp.task('images', function() {
         .pipe(gulp.dest('./dist/img/'))
 });
 
+// Таск для копирования шрифтов из src в dist
+gulp.task('fonts', function() {
+    return gulp.src('./src/fonts/**/*')
+        .pipe(gulp.dest('./dist/fonts/'))
+});
+
 // Настройки локального сервера:
 const serverOptions = {
     // livereload: true,
