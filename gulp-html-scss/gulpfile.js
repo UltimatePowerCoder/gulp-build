@@ -89,6 +89,12 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest('./dist/fonts/'))
 });
 
+// Таск для копирования файлов из src в dist
+gulp.task('files', function() {
+    return gulp.src('./src/files/**/*')
+        .pipe(gulp.dest('./dist/files/'))
+});
+
 // Настройки локального сервера:
 const serverOptions = {
     // livereload: true,
@@ -113,14 +119,16 @@ gulp.task('clean', function(done){
 gulp.task('watch', function(){
     gulp.watch('./src/scss/**/*.scss', gulp.parallel('sass'));
     gulp.watch('./src/**/*.html', gulp.parallel('html'));
+    gulp.watch('./fonts/**/*', gulp.parallel('fonts'));
     gulp.watch('./img/**/*', gulp.parallel('images'));
+    gulp.watch('./files/**/*', gulp.parallel('files'));
 
 })
 
 // Дефолтный таск, запускающий сборку:
 gulp.task('default', gulp.series(
     'clean',
-     gulp.parallel('html', 'sass', 'images'),
+     gulp.parallel('html', 'sass', 'images', 'fonts', 'files'),
      gulp.parallel('server', 'watch'),
 ))
 
