@@ -32,23 +32,34 @@ const plumber = require('gulp-plumber');
 // Переменная для подключения gulp-notify:
 const notify = require('gulp-notify');
 
-// Переменная с настройками gulp-plumber для "таска" html:
-const plumberHtmlConfig = {
-    errorHandler: notify.onError({
-        title: 'HTML',
-        message: 'Error <%= error.message %>',
-        sound: false,
-    })
+// Переменная с функцией для настройки gulp plumber:
+const plumberNotify = (title) => {
+    return {
+        errorHandler: notify.onError({
+            title: title,
+            message: 'Error <%= error.message %>',
+            sound: false,
+        })
+    }
 };
 
-// Переменная с настройками gulp-plumber для "таска" sass:
-const plumberSassConfig = {
-    errorHandler: notify.onError({
-        title: 'Styles',
-        message: 'Error <%= error.message %>',
-        sound: false,
-    })
-};
+// // Переменная с настройками gulp-plumber для "таска" html:
+// const plumberHtmlConfig = {
+//     errorHandler: notify.onError({
+//         title: 'HTML',
+//         message: 'Error <%= error.message %>',
+//         sound: false,
+//     })
+// };
+
+// // Переменная с настройками gulp-plumber для "таска" sass:
+// const plumberSassConfig = {
+//     errorHandler: notify.onError({
+//         title: 'Styles',
+//         message: 'Error <%= error.message %>',
+//         sound: false,
+//     })
+// };
 
 
 // Пишем task обрабатывающий html файлы:
@@ -58,7 +69,7 @@ gulp.task('html', function() {
     // Мы будем обрабатывать файлы из папки src за исключением папки blocks.
     return gulp.src('./src/*.html')
         // Подключаем gulp-plumber:
-        .pipe(plumber(plumberHtmlConfig))
+        .pipe(plumber(plumberNotify('HTML')))
         .pipe(fileInclude(fileIncludeSetting))
         .pipe(gulp.dest('./dist/'))
 });
@@ -67,7 +78,7 @@ gulp.task('html', function() {
 gulp.task('sass', function() {
     return gulp
         .src('./src/scss/*.scss')
-        .pipe(plumber(plumberSassConfig))
+        .pipe(plumber(plumberNotify('Styles')))
         .pipe(sourceMaps.init())
         .pipe(sass())
         // Подключение группировки медиа запросов:
